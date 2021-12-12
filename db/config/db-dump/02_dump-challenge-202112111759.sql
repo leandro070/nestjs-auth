@@ -18,6 +18,8 @@
 
 CREATE DATABASE challenge;
 USE challenge;
+GRANT ALL PRIVILEGES ON challenge.* TO 'test'@'%';
+FLUSH PRIVILEGES;
 
 --
 -- Table structure for table `Addresses`
