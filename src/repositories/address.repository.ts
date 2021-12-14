@@ -8,7 +8,7 @@ export class AddressRepository extends BaseAbstractRepository<IAddress> {
     const res = await this.query('INSERT INTO Addresses SET ?', address);
     return res.insertId as number;
   }
-  public async findByCondition(
+  protected async _findByCondition(
     filterCondition: any,
     args = [],
   ): Promise<IAddress[]> {

@@ -7,11 +7,15 @@ export class CityRepository extends BaseAbstractRepository<ICity> {
   public async create(user: Omit<ICity, 'id'>): Promise<number> {
     throw new Error('Method not implemented.');
   }
-  public async findByCondition(
+  protected async _findByCondition(
     filterCondition: any,
     args = [],
   ): Promise<ICity[]> {
-    throw new Error('Method not implemented.');
+    const res = await this.query(
+      'SELECT * FROM Cities WHERE ' + filterCondition,
+      [...args],
+    );
+    return res;
   }
   public findOneById(id: number): Promise<ICity> {
     const res = this.query('SELECT * FROM Cities WHERE id = ?', [id]);
@@ -22,5 +26,19 @@ export class CityRepository extends BaseAbstractRepository<ICity> {
   }
   public remove(id: number): Promise<boolean> {
     throw new Error('Method not implemented.');
+  }
+
+  async findAllByCountryId(countryId: number) {
+    let cities: ICity[] = await this.cacheManager.get(
+      `CITIES_BY_COUNTRY_${countryId}`,
+    );
+
+    if (!cities) {
+      const res = await this._findByCondition('countryId = ?', [countryId]);
+      cities = res;
+      await this.cacheManager.set(`CITIES_BY_COUNTRY_${countryId}`, cities);
+    }
+
+    return cities;
   }
 }

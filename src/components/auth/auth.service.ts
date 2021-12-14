@@ -62,10 +62,8 @@ export class AuthService {
     username,
     password,
   }: LoginUserRequest): Promise<Omit<IUser, 'password'>> {
-    const condition = `username = ?`;
-    const args = [username];
     const firstElementFound: IUser = (
-      await this.userRepository.findByCondition(condition, args)
+      await this.userRepository.findByUsername(username)
     )[0];
 
     if (!firstElementFound) {

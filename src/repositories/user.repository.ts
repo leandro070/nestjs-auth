@@ -8,7 +8,7 @@ export class UserRepository extends BaseAbstractRepository<IUser> {
     const res = await this.query('INSERT INTO Users SET ?', user);
     return res.insertId as number;
   }
-  public async findByCondition(
+  protected async _findByCondition(
     filterCondition: any,
     args = [],
   ): Promise<IUser[]> {
@@ -29,11 +29,8 @@ export class UserRepository extends BaseAbstractRepository<IUser> {
     throw new Error('Method not implemented.');
   }
 
-  public findByUsername(username: string) {
-    const res = this.query('SELECT * FROM Users WHERE username = ?', [
-      username,
-    ]);
-
+  public async findByUsername(username: string) {
+    const res = await this._findByCondition('username = ?', [username]);
     return res;
   }
 }

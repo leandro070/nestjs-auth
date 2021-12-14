@@ -8,7 +8,7 @@ export class ProfileRepository extends BaseAbstractRepository<IProfile> {
     const res = await this.query('INSERT INTO Profiles SET ?', profile);
     return res.insertId as number;
   }
-  public async findByCondition(
+  protected async _findByCondition(
     filterCondition: any,
     args: any[],
   ): Promise<IProfile[]> {
