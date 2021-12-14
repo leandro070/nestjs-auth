@@ -1,11 +1,15 @@
-import { Inject } from '@nestjs/common';
+import { CACHE_MANAGER, Inject } from '@nestjs/common';
 import { Connection } from 'mysql2/typings/mysql';
+import { Cache } from 'cache-manager';
 import { BaseInterfaceRepository } from './base.interface.repository';
 
 export abstract class BaseAbstractRepository<T>
   implements BaseInterfaceRepository<T>
 {
-  constructor(@Inject('MYSQL_CONNECTION') private db: Connection) {}
+  constructor(
+    @Inject('MYSQL_CONNECTION') private db: Connection,
+    @Inject(CACHE_MANAGER) protected cacheManager: Cache,
+  ) {}
 
   public abstract create(data: T): Promise<number>;
 
