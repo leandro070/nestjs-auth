@@ -5,6 +5,7 @@ import {
   HttpStatus,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 import {
   Response,
   TransformInterceptor,
@@ -16,6 +17,7 @@ import { ICountry } from './interfaces/ICountry';
 export class CountriesController {
   constructor(private readonly countriesService: CountriesService) {}
 
+  @ApiOperation({ summary: 'Get all countries' })
   @Get()
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(TransformInterceptor)
