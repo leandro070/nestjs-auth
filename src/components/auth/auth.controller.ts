@@ -3,12 +3,10 @@ import {
   Controller,
   HttpCode,
   HttpStatus,
-  Logger,
   Post,
   Request,
   UseGuards,
   UseInterceptors,
-  Version,
 } from '@nestjs/common';
 import {
   Response,
@@ -20,6 +18,8 @@ import { LoginUserReponse } from './dto/LoginUserResponse';
 import { LocalAuthGuard } from './local-auth.guard';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LoginUserRequest } from './dto/LoginUserRequest';
+import { UserNotExistPipe } from 'src/pipes/user-not-exist.pipe';
+import { CityExistPipe } from 'src/pipes/city-exist.pipe';
 
 @Controller({
   path: 'auth',
@@ -45,6 +45,8 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(TransformInterceptor)
   async registerUser(
+    @Body('username', UserNotExistPipe) username,
+    @Body('cityId', CityExistPipe) cityId,
     @Body() createUser: CreateUserRequest,
   ): Promise<Response<any>> {
     await this.authService.create(createUser);

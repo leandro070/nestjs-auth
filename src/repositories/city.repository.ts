@@ -17,9 +17,9 @@ export class CityRepository extends BaseAbstractRepository<ICity> {
     );
     return res;
   }
-  public findOneById(id: number): Promise<ICity> {
-    const res = this.query('SELECT * FROM Cities WHERE id = ?', [id]);
-    return res;
+  public async findOneById(id: number): Promise<ICity> {
+    const res = await this.query('SELECT * FROM Cities WHERE id = ?', [id]);
+    return res[0];
   }
   public findAll(): Promise<ICity[]> {
     throw new Error('Method not implemented.');

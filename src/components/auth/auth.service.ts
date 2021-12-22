@@ -26,17 +26,6 @@ export class AuthService {
     address,
     cityId,
   }: CreateUserRequest) {
-    const usersFound = await this.userRepository.findByUsername(username);
-    if (usersFound[0]) {
-      throw new HttpException('User already exist', HttpStatus.CONFLICT);
-    }
-
-    const citiesFound = await this.cityRepository.findOneById(cityId);
-
-    if (!citiesFound || !citiesFound[0]) {
-      throw new HttpException('City not found', HttpStatus.NOT_FOUND);
-    }
-
     const user = new User({ password, username });
     await user.encryptPassword();
 
@@ -84,6 +73,11 @@ export class AuthService {
     }
 
     return { username: firstElementFound.username, id: firstElementFound.id };
+  }
+
+  async findUserByUsername(username: string) {
+    const users = await this.userRepository.findByUsername(username);
+    return users[0];
   }
 
   async login(user: Omit<IUser, 'password'>) {

@@ -12,6 +12,9 @@ import { CityRepository } from 'src/repositories/city.repository';
 import { AddressRepository } from 'src/repositories/address.repository';
 import { ProfileRepository } from 'src/repositories/profile.repository';
 import { RedisCacheModule } from 'src/cache/redis.module';
+import { UserNotExistPipe } from 'src/pipes/user-not-exist.pipe';
+import { CityExistPipe } from 'src/pipes/city-exist.pipe';
+import { CitiesService } from '../cities/cities.service';
 
 @Module({
   imports: [
@@ -32,6 +35,9 @@ import { RedisCacheModule } from 'src/cache/redis.module';
     AddressRepository,
     LocalStrategy,
     JwtStrategy,
+    UserNotExistPipe,
+    CityExistPipe,
+    CitiesService,
   ],
   exports: [AuthService],
 })

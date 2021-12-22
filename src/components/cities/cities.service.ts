@@ -7,4 +7,8 @@ export class CitiesService {
   async findAllByCountryId(countryId) {
     return await this.cityRepository.findAllByCountryId(countryId);
   }
+
+  async findOneById(cityId) {
+    return await this.cityRepository.findOneById(cityId);
+  }
 }
