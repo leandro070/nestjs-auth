@@ -26,7 +26,7 @@ export function getConfigLogger(): LoggerService {
           winston.format.errors({ stack: true }),
           winston.format.printf(
             (info) =>
-              `[${info.context}] ${info.level}: ${[info.timestamp]}: ${
+              `${info.level} - ${[info.timestamp]} [${info.context}] : ${
                 info.message
               }${info.stack ? ' - ' + JSON.stringify(info.stack) : ''}`,
           ),
