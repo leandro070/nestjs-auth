@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { CityRepository } from 'src/repositories/city.repository';
 
 @Injectable()
@@ -13,7 +13,18 @@ export class CitiesService {
       `Finding all cities by countryId ${countryId}...`,
       `${CitiesService.name} - findAllByCountryId`,
     );
-    return await this.cityRepository.findAllByCountryId(countryId);
+    const cities = await this.cityRepository.findAllByCountryId(countryId);
+    if (!cities.length) {
+      this.logger.log(
+        `There aren't cities for countryId ${countryId}`,
+        `${CitiesService.name} - findAllByCountryId`,
+      );
+      throw new HttpException(
+        `There aren't cities for selected country`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return cities;
   }
 
   async findOneById(cityId) {
