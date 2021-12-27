@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { DatabaseModule } from 'src/database/database.module';
@@ -37,6 +37,7 @@ import { CitiesService } from '../cities/cities.service';
     JwtStrategy,
     UserNotExistPipe,
     CityExistPipe,
+    Logger,
     CitiesService,
   ],
   exports: [AuthService],

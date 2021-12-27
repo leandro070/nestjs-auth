@@ -33,7 +33,7 @@ async function bootstrap() {
               (info) =>
                 `[${info.context}] ${info.level}: ${[info.timestamp]}: ${
                   info.message
-                } - ${info.stack}`,
+                }${info.stack ? ' - ' + JSON.stringify(info.stack) : ''}`,
             ),
           ),
         }),

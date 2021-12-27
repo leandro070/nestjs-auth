@@ -6,18 +6,22 @@ class LogsMiddleware implements NestMiddleware {
   private readonly logger = new Logger();
 
   use(request: Request, response: Response, next: NextFunction) {
-    response.on('finish', () => {
-      const { method, originalUrl } = request;
-      const { statusCode, statusMessage } = response;
+    const { method, originalUrl, body } = request;
+    const message = `START [${method}] ${originalUrl}${
+      method !== 'GET' ? ' Body: ' + JSON.stringify(body) : ''
+    }`;
+    this.logger.log(message, 'LogsMiddleware');
 
-      const message = `(${statusCode}) [${method}] ${originalUrl} ${statusMessage}`;
+    response.on('finish', () => {
+      const { statusCode, statusMessage } = response;
+      const message = `END (${statusCode}) [${method}] ${originalUrl} ${statusMessage}`;
 
       if (statusCode >= 500) {
-        return this.logger.error(message);
+        return this.logger.warn(message);
       }
 
       if (statusCode >= 400) {
-        return this.logger.warn(message);
+        return this.logger.log(message);
       }
 
       return this.logger.log(message);

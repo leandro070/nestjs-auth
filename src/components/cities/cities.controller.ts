@@ -3,6 +3,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   Param,
   UseInterceptors,
 } from '@nestjs/common';
@@ -16,7 +17,10 @@ import { ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @Controller('cities')
 export class CitiesController {
-  constructor(private readonly citiesService: CitiesService) {}
+  constructor(
+    private readonly citiesService: CitiesService,
+    private readonly logger: Logger,
+  ) {}
 
   @ApiOperation({ summary: 'Get the cities of a country' })
   @ApiParam({
@@ -28,7 +32,15 @@ export class CitiesController {
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(TransformInterceptor)
   async findAllByCountryId(@Param() params): Promise<Response<ICity[]>> {
+    this.logger.log(
+      `Start finding all cities by countryId ${params.id}`,
+      `${CitiesController.name} - findAllByCountryId`,
+    );
     const res = await this.citiesService.findAllByCountryId(params.id);
+    this.logger.log(
+      `End finding all cities by countryId ${params.id}`,
+      `${CitiesController.name} - findAllByCountryId`,
+    );
     return {
       message: 'Cities filtered.',
       statusCode: HttpStatus.OK,

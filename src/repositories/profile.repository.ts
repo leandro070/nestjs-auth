@@ -25,13 +25,11 @@ export class ProfileRepository extends BaseAbstractRepository<IProfile> {
   }
   public async getProfileByUserId(userId: number): Promise<unknown> {
     const res = await this.query(
-      `SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
-      SELECT p.id, p.name, a.street, ci.name AS city, co.name AS country FROM Profiles AS p
+      `SELECT p.id, p.name, a.street, ci.name AS city, co.name AS country FROM Profiles AS p
       INNER JOIN Addresses a ON p.addressId = a.id 
       INNER JOIN Cities ci ON a.cityId = ci.id 
       INNER JOIN Countries co ON ci.countryId = co.id
-      WHERE p.userId = ?;
-      COMMIT ;`,
+      WHERE p.userId = ?;`,
       [userId],
     );
 

@@ -1,15 +1,19 @@
-import { Scope } from '@nestjs/common';
+import { Logger, Scope } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // const mysql = require('mysql2/promise');
 import * as mysql from 'mysql2/promise';
 
+export const MYSQL_CONNECTION = 'MYSQL_CONNECTION';
 export const databaseProviders = [
   {
-    provide: 'MYSQL_CONNECTION',
-    useFactory: async (configService: ConfigService): Promise<unknown> => {
+    provide: MYSQL_CONNECTION,
+    useFactory: async (
+      configService: ConfigService,
+      logger: Logger,
+    ): Promise<mysql.Pool> => {
       try {
-        const connection = await mysql.createPool({
+        const pool = await mysql.createPool({
           host: configService.get<string>('DATABASE_HOST'),
           port: configService.get<number>('DATABASE_PORT'),
           user: configService.get<string>('MYSQL_USER'),
@@ -20,13 +24,16 @@ export const databaseProviders = [
           queueLimit: 0,
           multipleStatements: true,
         });
-
-        return connection;
+        const conn = await pool.getConnection();
+        await conn.release();
+        logger.log('Database ready', 'DatabaseProvider');
+        return pool;
       } catch (error) {
-        throw error;
+        logger.error('Database connection error', error, 'DatabaseProvider');
+        process.exit();
       }
     },
-    inject: [ConfigService],
+    inject: [ConfigService, Logger],
     scope: Scope.TRANSIENT,
   },
 ];

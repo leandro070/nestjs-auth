@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { CitiesService } from './cities.service';
 import { CitiesController } from './cities.controller';
 import { CityRepository } from 'src/repositories/city.repository';
@@ -8,6 +8,6 @@ import { RedisCacheModule } from 'src/cache/redis.module';
 @Module({
   imports: [DatabaseModule, RedisCacheModule],
   controllers: [CitiesController],
-  providers: [CitiesService, CityRepository],
+  providers: [CitiesService, CityRepository, Logger],
 })
 export class CitiesModule {}
