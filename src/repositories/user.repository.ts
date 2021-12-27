@@ -48,43 +48,37 @@ export class UserRepository extends BaseAbstractRepository<IUser> {
       `Saving a new user on database`,
       `${UserRepository.name} - createUserByTransaction`,
     );
-    const conn = await this.db.getConnection();
-    await conn.execute('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
-    await conn.beginTransaction();
-    this.logger.log(
-      `Start transaction`,
-      `${UserRepository.name} - createUserByTransaction`,
-    );
+    let conn;
     try {
+      conn = await this.db.getConnection();
+    } catch (err) {
+      this.logger.error(
+        `Database connection error`,
+        err,
+        `${UserRepository.name} - createUserByTransaction`,
+      );
+      await conn.release();
+      throw new HttpException(
+        'Database connection error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    try {
+      await conn.execute('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+      await conn.beginTransaction();
       this.logger.log(
-        `Start creating user`,
+        `Start transaction`,
         `${UserRepository.name} - createUserByTransaction`,
       );
       const queryUser = await conn.query('INSERT INTO Users SET ?', user);
       const userId = queryUser[0]['insertId'];
-      this.logger.log(
-        `User created`,
-        `${UserRepository.name} - createUserByTransaction`,
-      );
 
-      this.logger.log(
-        `Start creating address`,
-        `${UserRepository.name} - createUserByTransaction`,
-      );
       const queryAddress = await conn.query(
         'INSERT INTO Addresses SET ?',
         address,
       );
       const addressId = queryAddress[0]['insertId'];
-      this.logger.log(
-        `Address created`,
-        `${UserRepository.name} - createUserByTransaction`,
-      );
-
-      this.logger.log(
-        `Start creating profile`,
-        `${UserRepository.name} - createUserByTransaction`,
-      );
       const profile: Omit<IProfile, 'id'> = {
         addressId,
         userId,
@@ -92,11 +86,6 @@ export class UserRepository extends BaseAbstractRepository<IUser> {
       };
 
       await conn.query('INSERT INTO Profiles SET ?', profile);
-      this.logger.log(
-        `Profile created`,
-        `${UserRepository.name} - createUserByTransaction`,
-      );
-
       await conn.commit();
       this.logger.log(
         `End transaction`,
@@ -104,8 +93,9 @@ export class UserRepository extends BaseAbstractRepository<IUser> {
       );
       return userId;
     } catch (err) {
-      this.logger.warn(
-        `An error has ocurred. Starting Rollback. Stack: ${err}`,
+      this.logger.error(
+        `An error has ocurred. Starting Rollback.`,
+        err,
         `${UserRepository.name} - createUserByTransaction`,
       );
       await conn.rollback();

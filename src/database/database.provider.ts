@@ -30,7 +30,6 @@ export const databaseProviders = [
         return pool;
       } catch (error) {
         logger.error('Database connection error', error, 'DatabaseProvider');
-        process.exit();
       }
     },
     inject: [ConfigService, Logger],
