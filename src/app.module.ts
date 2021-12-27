@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './components/auth/auth.module';
 import { DatabaseModule } from './database/database.module';
@@ -8,6 +8,7 @@ import { TransformInterceptor } from './interceptors/transform.interceptor';
 import { RedisCacheModule } from './cache/redis.module';
 import { CountriesModule } from './components/countries/countries.module';
 import { CitiesModule } from './components/cities/cities.module';
+import LogsMiddleware from './logger/logs.middleware';
 
 @Module({
   imports: [
@@ -27,4 +28,8 @@ import { CitiesModule } from './components/cities/cities.module';
   ],
   exports: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LogsMiddleware).forRoutes('*');
+  }
+}

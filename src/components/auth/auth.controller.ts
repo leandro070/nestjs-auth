@@ -4,29 +4,33 @@ import {
   HttpCode,
   HttpStatus,
   Logger,
+  ParseIntPipe,
   Post,
   Request,
   UseGuards,
   UseInterceptors,
-  Version,
 } from '@nestjs/common';
 import {
   Response,
   TransformInterceptor,
-} from 'src/interceptors/transform.interceptor';
+} from '@interceptors/transform.interceptor';
 import { AuthService } from './auth.service';
 import { CreateUserRequest } from './dto/CreateUserRequest';
 import { LoginUserReponse } from './dto/LoginUserResponse';
 import { LocalAuthGuard } from './local-auth.guard';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LoginUserRequest } from './dto/LoginUserRequest';
-
+import { UserNotExistPipe } from '@pipes/user-not-exist.pipe';
+import { CityExistPipe } from '@pipes/city-exist.pipe';
 @Controller({
   path: 'auth',
   version: '2.1',
 })
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly logger: Logger,
+  ) {}
 
   @ApiOperation({ summary: 'User register endpoint' })
   @ApiResponse({
@@ -45,14 +49,25 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(TransformInterceptor)
   async registerUser(
+    @Body('username', UserNotExistPipe) _username,
+    @Body('cityId', ParseIntPipe, CityExistPipe) _cityId,
     @Body() createUser: CreateUserRequest,
   ): Promise<Response<any>> {
-    await this.authService.create(createUser);
+    this.logger.log(
+      `Start registering new user ${JSON.stringify(createUser)}`,
+      `${AuthController.name} - registerUser`,
+    );
 
+    const user = await this.authService.create(createUser);
+
+    this.logger.log(
+      `The user '${createUser.username}' has been successfully created.`,
+      `${AuthController.name} - registerUser`,
+    );
     return {
       message: 'The user has been successfully created.',
       statusCode: HttpStatus.CREATED,
-      data: null,
+      data: user,
     };
   }
 
@@ -73,8 +88,17 @@ export class AuthController {
     @Request() req,
     @Body() dto: LoginUserRequest,
   ): Promise<Response<LoginUserReponse>> {
-    const result = await this.authService.login(req.user);
+    this.logger.log(
+      `Start logging the user ${JSON.stringify(dto)}`,
+      `${AuthController.name} - loginUser`,
+    );
 
+    const result = await this.authService.createToken(req.user);
+
+    this.logger.log(
+      `The user '${dto.username}' has been successfully logged`,
+      `${AuthController.name} - loginUser`,
+    );
     return {
       message: 'The user has been successfully logged.',
       statusCode: HttpStatus.OK,

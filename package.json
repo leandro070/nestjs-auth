@@ -36,6 +36,7 @@
     "class-validator": "^0.13.2",
     "helmet": "^4.6.0",
     "mysql2": "^2.3.3",
+    "nest-winston": "^1.6.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -43,7 +44,9 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "swagger-ui-express": "^4.2.0"
+    "swagger-ui-express": "^4.2.0",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -53,6 +56,7 @@
     "@types/cache-manager": "^3.4.2",
     "@types/express": "^4.17.13",
     "@types/jest": "27.0.2",
+    "@types/mysql2": "github:types/mysql2",
     "@types/node": "^16.0.0",
     "@types/passport-jwt": "^3.0.6",
     "@types/supertest": "^2.0.11",
@@ -77,7 +81,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": "test",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -86,6 +90,18 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@components(.*)$": "<rootDir>/../src/components/$1",
+      "^@database(.*)$": "<rootDir>/../src/database/$1",
+      "^@pipes(.*)$": "<rootDir>/../src/pipes/$1",
+      "^@repositories(.*)$": "<rootDir>/../src/repositories/$1",
+      "^@cache(.*)$": "<rootDir>/../src/cache/$1",
+      "^@config(.*)$": "<rootDir>/../src/config/$1",
+      "^@interceptors(.*)$": "<rootDir>/../src/interceptors/$1",
+      "^@logger(.*)$": "<rootDir>/../src/logger/$1",
+      "^@utils(.*)$": "<rootDir>/../src/utils/$1",
+      "^@test(.*)$": "<rootDir>/$1"
+    }
   }
 }
