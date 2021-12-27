@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ICity } from 'src/components/cities/interfaces/ICity';
+import { ICity } from '@components/cities/interfaces/ICity';
 import { BaseAbstractRepository } from './base/base.abstract.repository';
 
 @Injectable()

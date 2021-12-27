@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CountryRepository } from 'src/repositories/country.repository';
+import { CountryRepository } from '@repositories/country.repository';
 
 @Injectable()
 export class CountriesService {

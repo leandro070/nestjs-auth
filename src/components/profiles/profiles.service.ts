@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { ProfileRepository } from 'src/repositories/profile.repository';
+import { ProfileRepository } from '@repositories/profile.repository';
 import { UserProfileRequest } from './dto/UserProfileResponse';
 
 @Injectable()

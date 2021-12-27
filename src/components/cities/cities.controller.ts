@@ -10,7 +10,7 @@ import {
 import {
   Response,
   TransformInterceptor,
-} from 'src/interceptors/transform.interceptor';
+} from '@interceptors/transform.interceptor';
 import { CitiesService } from './cities.service';
 import { ICity } from './interfaces/ICity';
 import { ApiOperation, ApiParam } from '@nestjs/swagger';

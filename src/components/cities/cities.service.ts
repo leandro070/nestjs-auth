@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { CityRepository } from 'src/repositories/city.repository';
+import { CityRepository } from '@repositories/city.repository';
 
 @Injectable()
 export class CitiesService {

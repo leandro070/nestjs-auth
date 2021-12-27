@@ -10,7 +10,7 @@ import { ApiOperation } from '@nestjs/swagger';
 import {
   Response,
   TransformInterceptor,
-} from 'src/interceptors/transform.interceptor';
+} from '@interceptors/transform.interceptor';
 import { CountriesService } from './countries.service';
 import { ICountry } from './interfaces/ICountry';
 

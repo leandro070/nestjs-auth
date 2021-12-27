@@ -81,7 +81,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": "test",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -90,6 +90,18 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@components(.*)$": "<rootDir>/../src/components/$1",
+      "^@database(.*)$": "<rootDir>/../src/database/$1",
+      "^@pipes(.*)$": "<rootDir>/../src/pipes/$1",
+      "^@repositories(.*)$": "<rootDir>/../src/repositories/$1",
+      "^@cache(.*)$": "<rootDir>/../src/cache/$1",
+      "^@config(.*)$": "<rootDir>/../src/config/$1",
+      "^@interceptors(.*)$": "<rootDir>/../src/interceptors/$1",
+      "^@logger(.*)$": "<rootDir>/../src/logger/$1",
+      "^@utils(.*)$": "<rootDir>/../src/utils/$1",
+      "^@test(.*)$": "<rootDir>/$1"
+    }
   }
 }

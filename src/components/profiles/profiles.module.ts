@@ -1,9 +1,9 @@
 import { Logger, Module } from '@nestjs/common';
 import { ProfilesService } from './profiles.service';
 import { ProfilesController } from './profiles.controller';
-import { ProfileRepository } from 'src/repositories/profile.repository';
-import { DatabaseModule } from 'src/database/database.module';
-import { RedisCacheModule } from 'src/cache/redis.module';
+import { ProfileRepository } from '@repositories/profile.repository';
+import { DatabaseModule } from '@database/database.module';
+import { RedisCacheModule } from '@cache/redis.module';
 @Module({
   imports: [DatabaseModule, RedisCacheModule],
   controllers: [ProfilesController],

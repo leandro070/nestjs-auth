@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { UserRepository } from 'src/repositories/user.repository';
+import { UserRepository } from '@repositories/user.repository';
 import { CreateUserRequest } from './dto/CreateUserRequest';
 import { LoginUserRequest } from './dto/LoginUserRequest';
 import { User } from './entities/User';
@@ -20,7 +20,7 @@ export class AuthService {
     name,
     address,
     cityId,
-  }: CreateUserRequest) {
+  }: CreateUserRequest): Promise<Omit<IUser, 'password'>> {
     this.logger.log(
       `Start creating a new user '${username}'`,
       `${AuthService.name} - create`,

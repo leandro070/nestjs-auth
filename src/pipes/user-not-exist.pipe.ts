@@ -6,7 +6,7 @@ import {
   Logger,
   PipeTransform,
 } from '@nestjs/common';
-import { AuthService } from 'src/components/auth/auth.service';
+import { AuthService } from '@components/auth/auth.service';
 
 @Injectable()
 export class UserNotExistPipe implements PipeTransform {

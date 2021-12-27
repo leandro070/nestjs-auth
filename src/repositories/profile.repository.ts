@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IProfile } from 'src/components/profiles/interfaces/IProfile';
+import { IProfile } from '@components/profiles/interfaces/IProfile';
 import { BaseAbstractRepository } from './base/base.abstract.repository';
 
 @Injectable()

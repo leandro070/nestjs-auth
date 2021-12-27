@@ -1,7 +1,7 @@
 import { Inject, InternalServerErrorException, Logger } from '@nestjs/common';
 import { BaseInterfaceRepository } from './base.interface.repository';
-import { RedisCacheService } from 'src/cache/redis.service';
-import { MYSQL_CONNECTION } from 'src/database/database.provider';
+import { RedisCacheService } from '@cache/redis.service';
+import { MYSQL_CONNECTION } from '@database/database.provider';
 import * as mysql from 'mysql2/promise';
 
 export abstract class BaseAbstractRepository<T>

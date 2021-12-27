@@ -1,5 +1,5 @@
 import { MinLength } from 'class-validator';
-import { hashPassword, comparePassword } from 'src/utils/hashing';
+import { hashPassword, comparePassword } from '@utils/hashing';
 import { IUser } from '../interfaces/IUser';
 
 export class User implements IUser {

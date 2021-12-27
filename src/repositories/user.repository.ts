@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { IAddress } from 'src/components/addresses/interfaces/IAddress';
-import { IUser } from 'src/components/auth/interfaces/IUser';
-import { IProfile } from 'src/components/profiles/interfaces/IProfile';
+import { IAddress } from '@components/addresses/interfaces/IAddress';
+import { IUser } from '@components/auth/interfaces/IUser';
+import { IProfile } from '@components/profiles/interfaces/IProfile';
 import { BaseAbstractRepository } from './base/base.abstract.repository';
 
 @Injectable()

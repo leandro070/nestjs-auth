@@ -6,7 +6,7 @@ import {
   Logger,
   PipeTransform,
 } from '@nestjs/common';
-import { CitiesService } from 'src/components/cities/cities.service';
+import { CitiesService } from '@components/cities/cities.service';
 
 @Injectable()
 export class CityExistPipe implements PipeTransform {

@@ -13,15 +13,15 @@ import {
 import {
   Response,
   TransformInterceptor,
-} from 'src/interceptors/transform.interceptor';
+} from '@interceptors/transform.interceptor';
 import { AuthService } from './auth.service';
 import { CreateUserRequest } from './dto/CreateUserRequest';
 import { LoginUserReponse } from './dto/LoginUserResponse';
 import { LocalAuthGuard } from './local-auth.guard';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LoginUserRequest } from './dto/LoginUserRequest';
-import { UserNotExistPipe } from 'src/pipes/user-not-exist.pipe';
-import { CityExistPipe } from 'src/pipes/city-exist.pipe';
+import { UserNotExistPipe } from '@pipes/user-not-exist.pipe';
+import { CityExistPipe } from '@pipes/city-exist.pipe';
 @Controller({
   path: 'auth',
   version: '2.1',

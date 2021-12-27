@@ -11,7 +11,7 @@ import {
 import {
   Response,
   TransformInterceptor,
-} from 'src/interceptors/transform.interceptor';
+} from '@interceptors/transform.interceptor';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserProfileRequest } from './dto/UserProfileResponse';
 import { ProfilesService } from './profiles.service';

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IAddress } from 'src/components/addresses/interfaces/IAddress';
+import { IAddress } from '@components/addresses/interfaces/IAddress';
 import { BaseAbstractRepository } from './base/base.abstract.repository';
 
 @Injectable()

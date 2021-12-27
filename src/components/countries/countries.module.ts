@@ -1,9 +1,9 @@
 import { Logger, Module } from '@nestjs/common';
 import { CountriesService } from './countries.service';
 import { CountriesController } from './countries.controller';
-import { CountryRepository } from 'src/repositories/country.repository';
-import { RedisCacheModule } from 'src/cache/redis.module';
-import { DatabaseModule } from 'src/database/database.module';
+import { CountryRepository } from '@repositories/country.repository';
+import { RedisCacheModule } from '@cache/redis.module';
+import { DatabaseModule } from '@database/database.module';
 
 @Module({
   imports: [DatabaseModule, RedisCacheModule],
