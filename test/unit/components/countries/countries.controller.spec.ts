@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CountriesController } from '../../../src/components/countries/countries.controller';
-import { CountriesService } from '../../../src/components/countries/countries.service';
+import { CountriesController } from '@components/countries/countries.controller';
+import { CountriesService } from '@components/countries/countries.service';
 
 describe('CountriesController', () => {
   let controller: CountriesController;
